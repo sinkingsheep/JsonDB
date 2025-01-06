@@ -366,4 +366,4 @@ MIT
 
 ## Credits
 
-Created and maintained by Sujith
+Created and maintained by [sinkingsheep](https://github.com/sinkingsheep)
