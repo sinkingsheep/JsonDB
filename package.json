@@ -1,0 +1,38 @@
+{
+  "name": "@sinkingsheep/jsondb",
+  "version": "1.0.0",
+  "description": "A lightweight JSON-based database for Node.js",
+  "main": "dist/JsonDB.js",
+  "types": "dist/JsonDB.d.ts",
+  "scripts": {
+    "test": "jest",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sinkingsheep/JsonDB.git"
+  },
+  "keywords": [
+    "json",
+    "database",
+    "nodejs",
+    "lightweight"
+  ],
+  "author": "Sujith <sjith1987@gmail.com>",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "@types/jest": "^29.0.0",
+    "@types/nanoid": "^3.0.0",
+    "@types/node": "^22.10.3",
+    "jest": "^29.0.0",
+    "ts-jest": "^29.0.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@jest/globals": "^29.7.0",
+    "nanoid": "^5.0.9"
+  }
+}

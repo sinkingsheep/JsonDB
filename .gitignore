@@ -1,0 +1,34 @@
+# Dependencies
+node_modules/
+
+# Compiled output
+dist/
+build/
+out/
+
+# Test files
+coverage/
+test_data/
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+debug.log
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Temporary files
+temp/
+tmp/
+*.tmp
