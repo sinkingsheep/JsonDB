@@ -8,23 +8,29 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+
     steps:
+      # Checkout the repository
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
 
+      # Set up Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
           node-version: "20"
           registry-url: "https://registry.npmjs.org"
 
+      # Install pnpm
       - name: Setup pnpm
         run: npm install -g pnpm
 
+      # Install dependencies
       - name: Install dependencies
         run: pnpm install
 
+      # Check if the version has changed
       - name: Check the version
         id: check
         run: |
@@ -45,18 +51,42 @@ jobs:
             echo "version_changed=false" >> $GITHUB_OUTPUT
           fi
 
+      # Build the package
       - name: Build
-        run: pnpm build
         if: steps.check.outputs.version_changed == 'true'
+        run: pnpm build
 
+      # Publish the package to npm
       - name: Publish
         if: steps.check.outputs.version_changed == 'true'
         run: npm publish --access public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: Tag release on push
+
+      # Get version from package.json
+      - name: Get version from package.json
+        id: get_version
+        run: |
+          echo "::set-output name=version::$(node -p \"require('./package.json').version\")"
+
+      # Tag the release
+      - name: Tag the release
         if: steps.check.outputs.version_changed == 'true'
-        uses: devops-infra/action-tag-release-on-push@v1
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git tag v${{ steps.get_version.outputs.version }}
+          git push origin v${{ steps.get_version.outputs.version }}
+
+      # Create a GitHub release
+      - name: Create GitHub Release
+        if: steps.check.outputs.version_changed == 'true'
+        uses: actions/create-release@v1
         with:
-          github_token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          tag_prefix: 'v'
+          tag_name: v${{ steps.get_version.outputs.version }}
+          release_name: "Release v${{ steps.get_version.outputs.version }}"
+          body: "Automatically generated release by GitHub Actions."
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
