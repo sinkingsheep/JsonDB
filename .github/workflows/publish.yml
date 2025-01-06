@@ -54,10 +54,9 @@ jobs:
         run: npm publish --access public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: Tag release
+      - name: Tag release on push
         if: steps.check.outputs.version_changed == 'true'
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git tag -a "v${{ steps.check.outputs.new_version }}" -m "v${{ steps.check.outputs.new_version }}"
-          git push https://x-access-token:${{ secrets.REPO_ACCESS_TOKEN }}@github.com/${{ github.repository }} "v${{ steps.check.outputs.new_version }}"
+        uses: devops-infra/action-tag-release-on-push@v1
+        with:
+          github_token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          tag_prefix: 'v'
