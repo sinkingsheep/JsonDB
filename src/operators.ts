@@ -7,12 +7,12 @@ export const evaluateOperator = (
   docValue: any
 ): boolean => {
   // Add debug logging
-  console.log(`Evaluating ${operator}:`, { value, docValue });
+  // console.log(`Evaluating ${operator}:`, { value, docValue });
 
   switch (operator) {
     case "$eq":
       const result = docValue === value;
-      console.log(`$eq comparison result:`, result);
+      // console.log(`$eq comparison result:`, result);
       return result;
     case "$gt":
       return docValue > value;
@@ -70,12 +70,12 @@ export const evaluateOperator = (
 };
 
 export const matchesQuery = (document: any, query: OperatorQuery): boolean => {
-  console.log("\nMatching document:", document);
-  console.log("Against query:", query);
+  // console.log("\nMatching document:", document);
+  // console.log("Against query:", query);
 
   return Object.entries(query).every(([key, condition]) => {
-    console.log("\nChecking field:", key);
-    console.log("With condition:", condition);
+    // console.log("\nChecking field:", key);
+    // console.log("With condition:", condition);
 
     // Handle logical operators
     if (key === "$or" && Array.isArray(condition)) {

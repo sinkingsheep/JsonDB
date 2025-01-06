@@ -233,7 +233,7 @@ class JsonDB extends EventEmitter {
     const collection = this.collections.get(collectionName)!;
 
     let results = Array.from(collection.values()) as T[];
-    console.log('Loaded documents:', results);
+    // console.log('Loaded documents:', results);
 
     if (Object.keys(query).length > 0) {
       results = results.filter(doc => matchesQuery(doc, query));
