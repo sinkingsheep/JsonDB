@@ -1,6 +1,6 @@
 {
   "name": "@sinkingsheep/jsondb",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A lightweight JSON-based database for Node.js",
   "main": "dist/JsonDB.js",
   "types": "dist/JsonDB.d.ts",
