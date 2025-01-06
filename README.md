@@ -18,15 +18,15 @@ A powerful, MongoDB-like JSON database for Node.js with TypeScript support. Json
 ## Installation
 
 ```bash
-npm install jsondb
+npm install @sinkingsheep/jsondb
 # or
-yarn add jsondb
+yarn add @sinkingsheep/jsondb
 ```
 
 ## Quick Start
 
 ```typescript
-import JsonDB from 'jsondb';
+import JsonDB from '@sinkingsheep/jsondb';
 
 interface User {
   id?: string;
