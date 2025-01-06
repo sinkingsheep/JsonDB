@@ -63,28 +63,22 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      # Get version from package.json
-      - name: Get version from package.json
-        id: get_version
-        run: |
-          echo "::set-output name=version::$(node -p \"require('./package.json').version\")"
-
       # Tag the release
       - name: Tag the release
         if: steps.check.outputs.version_changed == 'true'
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git tag v${{ steps.get_version.outputs.version }}
-          git push origin v${{ steps.get_version.outputs.version }}
+          git tag v${{ steps.check.outputs.new_version }}
+          git push origin v${{ steps.check.outputs.new_version }}
 
       # Create a GitHub release
       - name: Create GitHub Release
         if: steps.check.outputs.version_changed == 'true'
         uses: actions/create-release@v1
         with:
-          tag_name: v${{ steps.get_version.outputs.version }}
-          release_name: "Release v${{ steps.get_version.outputs.version }}"
+          tag_name: v${{ steps.check.outputs.new_version }}
+          release_name: "Release v${{ steps.check.outputs.new_version }}"
           body: "Automatically generated release by GitHub Actions."
           draft: false
           prerelease: false
